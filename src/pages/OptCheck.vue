@@ -94,6 +94,10 @@ const goToPickup = () => {
   router.push('/pickupPhone')
 }
 
+const goToPackage = () => {
+  router.push('/packagePayment')
+}
+
 // 計算屬性
 const otpValue = computed(() => otp.value.join(''))
 
@@ -168,6 +172,7 @@ const clickComfirm = () => {
   }
 
   console.log('驗證碼：', otpValue.value)
+  goToPackage()
 }
 
 onMounted(() => {
