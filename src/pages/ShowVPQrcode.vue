@@ -9,9 +9,9 @@
       size="lg"
       @click="goToHome"
     />
-    <q-card class="card flex column items-center justify-between q-pa-lg"
+    <q-card class="card flex column items-center justify-between q-pa-xl"
       ><div class="card-title text-indigo-8 q-mb-lg">請使用 數位憑證皮夾 APP 掃描 QR Code</div>
-      <div v-if="!isVerify" class="card-content">
+      <div class="card-content">
         <div class="text-h5 text-negative text-bold text-center" style="line-height: 1.2">
           請注意 QR Code 只能使用一次，如發生 QR Code 失效或倒數結束，請點選『重新產生 QR
           CODE』，再掃描 QR Code 完成流程。
@@ -19,39 +19,26 @@
         <div class="qrcode-section">
           <q-img :src="qrcodeImg" height="100%" fit="contain"></q-img>
         </div>
-        <p class="text-h4 text-center">
+        <p class="text-h5 text-center">
           驗證倒數：<span class="text-grey-7">
             {{ `0${Math.floor(countdown / 60)}` }}:{{ String(countdown % 60).padStart(2, '0') }}
           </span>
         </p>
       </div>
-      <div v-else class="col">
-        <div class="text-h4 text-positive text-bold text-center q-my-lg">驗證成功</div>
-        <div class="text-h4 text-positive text-bold text-center">電話號碼：0912345678</div>
-      </div></q-card
-    >
+    </q-card>
     <div class="flex row q-gutter-lg">
       <q-btn
         class="col-auto q-mt-xl q-px-xl q-py-md"
         color="grey"
         label="取消"
-        size="28px"
-        @click="goToVerify"
+        size="24px"
+        @click="goToHome"
       ></q-btn>
       <q-btn
-        v-if="!isVerify"
         class="col-auto q-mt-xl q-px-xl q-py-md"
         color="indigo-6"
         label="重新產生 QR CODE"
-        size="28px"
-      ></q-btn>
-      <q-btn
-        v-else
-        class="col-auto q-mt-xl q-px-xl q-py-md"
-        color="indigo-6"
-        label="下一步"
-        size="28px"
-        @click="goToPackage"
+        size="24px"
       ></q-btn>
     </div>
   </q-page>
@@ -60,6 +47,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useUserInfoStore } from 'src/stores/userInfo'
+
+const userInfoStore = useUserInfoStore()
+
+const { type } = storeToRefs(userInfoStore)
 import qrcodeImg from 'src/assets/qrcode-example.png'
 
 const router = useRouter()
@@ -74,8 +67,9 @@ const startCountdown = () => {
   countdownInterval.value = setInterval(() => {
     countdown.value--
 
-    if (countdown.value === 292) {
+    if (countdown.value === 295) {
       isVerify.value = true
+      goNextPage()
     }
 
     if (countdown.value <= 0) {
@@ -97,12 +91,12 @@ const goToHome = () => {
   router.push('/')
 }
 
-const goToVerify = () => {
-  router.push('/verifyNotice')
-}
-
-const goToPackage = () => {
-  router.push('/packagePayment')
+const goNextPage = () => {
+  if (type.value == '1') {
+    router.push('/storeItemInfo')
+  } else {
+    router.push('/packagePayment')
+  }
 }
 
 onMounted(() => {

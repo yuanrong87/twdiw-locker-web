@@ -5,19 +5,14 @@ const routes = [
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
   {
-    path: '/pickupPhone',
+    path: '/lockerSelection',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/PickupPhone.vue') }],
+    children: [{ path: '', component: () => import('pages/LockerSelection.vue') }],
   },
   {
-    path: '/optCheck',
+    path: '/storeItemInfo',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/OptCheck.vue') }],
-  },
-  {
-    path: '/verifyNotice',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/VerifyNotice.vue') }],
+    children: [{ path: '', component: () => import('pages/StoreItemInfo.vue') }],
   },
   {
     path: '/qrcode',
