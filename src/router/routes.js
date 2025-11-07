@@ -5,29 +5,14 @@ const routes = [
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
   {
-    path: '/lockerSelection',
+    path: '/send',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/LockerSelection.vue') }],
+    children: [{ path: '', component: () => import('pages/SendStepper.vue') }],
   },
   {
-    path: '/storeItemInfo',
+    path: '/pickup',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/StoreItemInfo.vue') }],
-  },
-  {
-    path: '/qrcode',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/ShowVPQrcode.vue') }],
-  },
-  {
-    path: '/packagePayment',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/PackagePayment.vue') }],
-  },
-  {
-    path: '/packageInfo',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/PackageInfo.vue') }],
+    children: [{ path: '', component: () => import('pages/PickupStepper.vue') }],
   },
   // Always leave this as last one,
   // but you can also remove it

@@ -56,18 +56,18 @@ const router = useRouter()
 const goTo = (btnType) => {
   type.value = btnType
   if (btnType == '1') {
-    goToPickLocker()
+    goToSend()
   } else {
-    goToVerify()
+    goToPickup()
   }
 }
 
-const goToPickLocker = () => {
-  router.push('/lockerSelection')
+const goToSend = () => {
+  router.push('/send')
 }
 
-const goToVerify = () => {
-  router.push('/qrcode')
+const goToPickup = () => {
+  router.push('/pickup')
 }
 </script>
 
