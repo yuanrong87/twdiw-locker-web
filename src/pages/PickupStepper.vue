@@ -31,8 +31,8 @@
     >
       <q-step
         :name="1"
-        :title="'步驟一'"
-        caption="VP QR Code 驗證"
+        prefix="1"
+        title="QR Code 驗證"
         icon="settings"
         :done="step > 1"
         :header-nav="step > 1"
@@ -41,8 +41,8 @@
       </q-step>
       <q-step
         :name="2"
-        :title="'步驟二'"
-        caption="確認貨物"
+        prefix="2"
+        title="確認資料"
         icon="settings"
         :done="step > 2"
         :header-nav="step > 2"
@@ -56,8 +56,8 @@
       </q-step>
       <q-step
         :name="3"
-        :title="'步驟三'"
-        caption="付款"
+        prefix="3"
+        title="付款"
         icon="settings"
         :done="step > 3"
         :header-nav="step > 3"
