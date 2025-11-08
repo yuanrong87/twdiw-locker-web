@@ -56,7 +56,7 @@ const toNextStep = async () => {
     return
   }
 
-  formData.value.locker = selectedLocker.value.lockerNo
+  formData.value.lockerNo = selectedLocker.value.lockerNo
   emit('next-step')
 }
 

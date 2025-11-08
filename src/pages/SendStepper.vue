@@ -100,12 +100,14 @@ defineEmits([...useDialogPluginComponent.emits])
 
 // 步驟表單資料
 const formData = reactive({
-  locker: '',
+  item: '',
+  lockerNo: '',
   sendName: '',
   sendPhone: '',
   location: '',
   receiveName: '',
   receivePhone: '',
+  payment: 0,
 })
 
 // 步驟相關

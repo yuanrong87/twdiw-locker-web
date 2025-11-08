@@ -104,7 +104,10 @@ const startPolling = () => {
         claimsData.value = result?.data
 
         const idCard = claimsData.value.data?.find(
-          (item) => item.credentialType === '00000000_id_card',
+          (item) =>
+            item.credentialType === '00000000_id_card' ||
+            item.credentialType === '00000000_nhi_card' ||
+            item.credentialType === '00000000_driving_license_test',
         )
 
         const telCard = claimsData.value.data?.find(

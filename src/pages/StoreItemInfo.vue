@@ -103,6 +103,7 @@ const emit = defineEmits(['next-step'])
 
 // 下一步 ＋ 檢核
 const toNextStep = async () => {
+  formData.value.item = method.value
   formData.value.location = selectedBranch.value
   formData.value.receiveName = fields.value.name
   formData.value.receivePhone = fields.value.phone

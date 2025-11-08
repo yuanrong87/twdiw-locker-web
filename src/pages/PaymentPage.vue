@@ -29,23 +29,32 @@
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useNotify } from 'src/utils/plugin'
+import { useUserInfoStore } from 'src/stores/userInfo'
 
 const $n = useNotify()
 const $q = useQuasar()
 
 const router = useRouter()
+const userInfoStore = useUserInfoStore()
 
 // 步驟資料
 const formData = defineModel('formData')
 
-const payFee = () => {
-  $q.dialog({
-    title: '交易成功',
-    message: `請至 ${formData.value.locker} 櫃放入物品，並於放置完成後關閉櫃門，謝謝。`,
-    persistent: true,
-  }).onOk(() => {
-    router.push('/')
-  })
+const payFee = async () => {
+  formData.value.payment = 30
+  if (!formData.value.location) formData.value.location = '1'
+
+  const data = { ...formData.value }
+  const result = await userInfoStore.sendUserInfo(data)
+  if (result) {
+    $q.dialog({
+      title: '交易成功',
+      message: `請至 ${formData.value.lockerNo} 櫃放入物品，並於放置完成後關閉櫃門，謝謝。`,
+      persistent: true,
+    }).onOk(() => {
+      router.push('/')
+    })
+  }
 }
 
 const cancel = () => {

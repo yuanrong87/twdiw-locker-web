@@ -82,6 +82,24 @@ export const useUserInfoStore = defineStore('userInfo', () => {
     }
   }
 
+  const sendUserInfo = async (data) => {
+    try {
+      const response = await api.post(`/lockers/operation`, data)
+      const responseData = response.data
+      if (responseData.code !== '0000') {
+        $n.error(responseData.message)
+        return null
+      } else {
+        return responseData
+      }
+    } catch (error) {
+      console.log(error)
+      const errorMessage = error.response?.data?.message || '發生未知錯誤'
+      $n.error(errorMessage)
+      return null
+    }
+  }
+
   return {
     lockers,
     selectedLocker,
@@ -95,5 +113,6 @@ export const useUserInfoStore = defineStore('userInfo', () => {
     qrCodeDetail,
     qrcodeLoading,
     getQrcodeValidate,
+    sendUserInfo,
   }
 })
