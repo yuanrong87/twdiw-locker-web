@@ -3,10 +3,10 @@
   <q-card class="q-pa-lg" style="width: 100%">
     <div class="text-h4 text-teal text-bold text-center q-mb-lg">確認資料</div>
 
-    <!-- 寄貨人資訊 -->
+    <!-- 寄件人資訊 -->
     <q-card flat bordered class="q-pa-md q-mb-xl">
       <div class="text-h6 text-bold text-teal flex items-center q-mb-sm">
-        <q-icon name="local_shipping" size="md" class="q-mr-sm" /> 寄貨人資訊
+        <q-icon name="local_shipping" size="md" class="q-mr-sm" /> 寄件人資訊
       </div>
       <q-separator spaced />
 
@@ -22,10 +22,10 @@
       </div>
     </q-card>
 
-    <!-- 取貨人資訊 -->
+    <!-- 取件人資訊 -->
     <q-card flat bordered class="q-pa-md q-mb-md">
       <div class="text-h6 text-bold text-teal flex items-center">
-        <q-icon name="shopping_bag" size="md" class="q-mr-sm" /> 取貨人資訊
+        <q-icon name="shopping_bag" size="md" class="q-mr-sm" /> 取件人資訊
       </div>
       <q-separator spaced />
 

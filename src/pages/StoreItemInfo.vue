@@ -9,10 +9,10 @@
       <q-radio size="lg" v-model="method" val="2" label="派送" class="text-h5" />
     </div>
 
-    <!-- 寄貨人資訊 -->
+    <!-- 寄件人資訊 -->
     <q-card flat bordered class="q-pa-md q-mb-xl">
       <div class="text-h6 text-bold text-teal flex items-center q-mb-sm">
-        <q-icon name="local_shipping" size="md" class="q-mr-sm" /> 寄貨人資訊
+        <q-icon name="local_shipping" size="md" class="q-mr-sm" /> 寄件人資訊
       </div>
       <q-separator spaced />
 
@@ -28,13 +28,13 @@
       </div>
     </q-card>
 
-    <!-- 取貨人資訊 -->
+    <!-- 取件人資訊 -->
     <q-card flat bordered class="q-pa-md q-mb-md">
       <div class="flex items-center justify-between q-mb-sm">
         <div class="text-h6 text-bold text-teal flex items-center">
-          <q-icon name="shopping_bag" size="md" class="q-mr-sm" /> 取貨人資訊
+          <q-icon name="shopping_bag" size="md" class="q-mr-sm" /> 取件人資訊
         </div>
-        <q-checkbox v-model="sameAsSender" label="同寄貨人" color="teal" class="text-h6" />
+        <q-checkbox v-model="sameAsSender" label="同寄件人" color="teal" class="text-h6" />
       </div>
       <q-separator spaced />
       <q-form ref="formRef" greedy>

@@ -31,8 +31,8 @@
     >
       <q-step
         :name="1"
-        :title="'步驟一'"
-        caption="選擇櫃子"
+        prefix="1"
+        title="選擇櫃子"
         icon="settings"
         :done="step > 1"
         :header-nav="step > 1"
@@ -41,8 +41,8 @@
       </q-step>
       <q-step
         :name="2"
-        :title="'步驟二'"
-        caption="VP QR Code 驗證"
+        prefix="2"
+        title="QR Code 驗證"
         icon="settings"
         :done="step > 2"
         :header-nav="step > 2"
@@ -56,15 +56,22 @@
       </q-step>
       <q-step
         :name="3"
-        :title="'步驟三'"
-        caption="寄物資訊填寫"
+        prefix="3"
+        title="資訊填寫"
         icon="settings"
         :done="step > 3"
         :header-nav="step > 3"
       >
         <StoreItemInfo ref="stepRef" v-model:formData="formData" @next-step="handleNextStep" />
       </q-step>
-      <q-step :name="4" :title="'步驟四'" caption="確認資料" icon="settings" :header-nav="step > 4">
+      <q-step
+        :name="4"
+        prefix="4"
+        title="確認資料"
+        icon="settings"
+        :done="step > 4"
+        :header-nav="step > 4"
+      >
         <ComfirmInfo
           ref="stepRef"
           v-model:formData="formData"
@@ -72,7 +79,7 @@
           @go-previous="goPrevious"
         />
       </q-step>
-      <q-step :name="5" :title="'步驟五'" caption="付款" icon="settings" :header-nav="step > 5">
+      <q-step :name="5" prefix="5" title="付款" icon="settings" :header-nav="step > 5">
         <PaymentPage ref="stepRef" v-model:formData="formData" @go-previous="goPrevious" />
       </q-step>
     </q-stepper>
