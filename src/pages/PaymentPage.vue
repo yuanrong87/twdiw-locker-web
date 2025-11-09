@@ -66,7 +66,7 @@ const payFee = async () => {
 
   const data = {
     item: formData.value.item,
-    location: formData.value.location,
+    location: formData.value.location.key,
     lockerNo: formData.value.lockerNo,
     sendName: formData.value.verifyName,
     sendPhone: formData.value.verifyPhone,

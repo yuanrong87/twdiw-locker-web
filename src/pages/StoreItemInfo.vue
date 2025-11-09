@@ -58,11 +58,10 @@
           <q-select
             v-model="selectedBranch"
             :options="location"
-            option-value="value"
+            option-value="key"
             option-label="value"
             outlined
             clearable
-            emit-value
             map-options
             class="col"
             :rules="[(val) => !!val || '請選擇據點']"

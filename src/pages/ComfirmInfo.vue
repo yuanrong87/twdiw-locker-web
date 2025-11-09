@@ -32,7 +32,7 @@
       <div class="q-gutter-sm q-mt-sm">
         <div v-if="formData.location != null" class="row items-center">
           <div class="text-h6 col-3 text-center">收件據點：</div>
-          <div class="text-h6 col text-dark">{{ formData.location }}</div>
+          <div class="text-h6 col text-dark">{{ formData.location.value }}</div>
         </div>
         <div class="row items-center">
           <div class="text-h6 col-3 text-center">姓名：</div>
