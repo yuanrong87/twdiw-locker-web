@@ -125,7 +125,6 @@ const toPrevious = () => {
 
 // 下一步 ＋ 檢核
 const toNextStep = async () => {
-  console.log(selectedBranch.value)
   formData.value.item = method.value
   formData.value.location = selectedBranch.value
   formData.value.receiveName = receiveFields.value.name
@@ -144,7 +143,7 @@ const fieldLabels = {
   phone: '手機號碼',
 }
 
-const selectedBranch = ref(null)
+const selectedBranch = ref('')
 
 watch(sameAsSender, (val) => {
   const name = formData.value.verifyName ? formData.value.verifyName : field.value.name
@@ -155,7 +154,7 @@ watch(sameAsSender, (val) => {
 
 const resetForm = () => {
   sameAsSender.value = false
-  selectedBranch.value = null
+  selectedBranch.value = ''
 
   // 清空欄位
   Object.keys(receiveFields.value).forEach((key) => {
