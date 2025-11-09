@@ -32,17 +32,18 @@
   </div>
   <div class="flex row justify-center">
     <q-btn
-      class="col-auto q-px-xl q-py-md q-mr-xl"
+      outline
+      class="col-auto q-mr-xl"
       color="grey"
       label="上一步"
-      size="24px"
+      size="lg"
       @click="toPrevious"
     ></q-btn>
     <q-btn
-      class="col-auto q-px-xl q-py-md"
+      class="col-auto q-py-md"
       color="indigo-6"
       label="重新產生 QR CODE"
-      size="24px"
+      size="lg"
       @click="regenerateQRCode"
     ></q-btn>
   </div>
@@ -95,7 +96,7 @@ const startPolling = () => {
       const res = result?.data
 
       if (!res) {
-        console.error('沒有收到伺服器回應')
+        console.error('輪詢驗證結果失敗')
         return
       }
 
@@ -114,9 +115,9 @@ const startPolling = () => {
           (item) => item.credentialType === '00000000_uni_tel_card',
         )
 
-        formData.value.sendName = idCard?.claims.find((c) => c.ename === 'name')?.value || ''
+        formData.value.verifyName = idCard?.claims.find((c) => c.ename === 'name')?.value || ''
 
-        formData.value.sendPhone =
+        formData.value.verifyPhone =
           telCard?.claims.find((c) => c.ename === 'universal_telecom_card')?.value || ''
 
         stopPolling()
@@ -177,6 +178,8 @@ const regenerateQRCode = async () => {
 
 // 上一步
 const toPrevious = () => {
+  stopCountdown()
+  stopPolling()
   emit('go-previous')
 }
 

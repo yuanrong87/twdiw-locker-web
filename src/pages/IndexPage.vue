@@ -46,18 +46,11 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import { useUserInfoStore } from 'src/stores/userInfo'
-
-const userInfoStore = useUserInfoStore()
-
-const { type } = storeToRefs(userInfoStore)
 
 const router = useRouter()
 
 const goTo = (btnType) => {
-  type.value = btnType
   if (btnType == '1') {
     goToSend()
   } else {

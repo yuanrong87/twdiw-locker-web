@@ -8,42 +8,58 @@
       <q-radio size="lg" v-model="method" val="1" label="寄放" class="text-h5" />
       <q-radio size="lg" v-model="method" val="2" label="派送" class="text-h5" />
     </div>
-
-    <!-- 寄件人資訊 -->
-    <q-card flat bordered class="q-pa-md q-mb-xl">
-      <div class="text-h6 text-bold text-teal flex items-center q-mb-sm">
-        <q-icon name="local_shipping" size="md" class="q-mr-sm" /> 寄件人資訊
-      </div>
-      <q-separator spaced />
-
-      <div class="q-gutter-sm q-mt-sm">
-        <div class="row items-center">
-          <div class="text-h6 col-3 text-center">姓名：</div>
-          <div class="text-h6 col text-dark">{{ formData.sendName }}</div>
+    <q-form ref="formRef" greedy>
+      <!-- 寄件人資訊 -->
+      <q-card flat bordered class="q-pa-md q-mb-xl">
+        <div class="text-h6 text-bold text-teal flex items-center q-mb-sm">
+          <q-icon name="local_shipping" size="md" class="q-mr-sm" /> 寄件人資訊
         </div>
-        <div class="row items-center">
-          <div class="text-h6 col-3 text-center">手機號碼：</div>
-          <div class="text-h6 col text-dark">{{ formData.sendPhone }}</div>
-        </div>
-      </div>
-    </q-card>
+        <q-separator spaced />
 
-    <!-- 取件人資訊 -->
-    <q-card flat bordered class="q-pa-md q-mb-md">
-      <div class="flex items-center justify-between q-mb-sm">
-        <div class="text-h6 text-bold text-teal flex items-center">
-          <q-icon name="shopping_bag" size="md" class="q-mr-sm" /> 取件人資訊
+        <div class="q-gutter-sm q-mt-sm">
+          <div class="row items-center">
+            <div class="text-h6 col-3 text-center">姓名：</div>
+            <q-input
+              v-if="formData.verifyName === ''"
+              class="col"
+              outlined
+              v-model="field.name"
+              :rules="[(val) => !!val || '請輸入資料']"
+            />
+            <div v-else class="text-h6 col text-dark">{{ formData.verifyName }}</div>
+          </div>
+          <div class="row items-center">
+            <div class="text-h6 col-3 text-center">手機號碼：</div>
+            <q-input
+              v-if="formData.verifyPhone === ''"
+              class="col"
+              outlined
+              v-model="field.phone"
+              :rules="[(val) => !!val || '請輸入資料']"
+            />
+            <div v-else class="text-h6 col text-dark">{{ formData.verifyPhone }}</div>
+          </div>
         </div>
-        <q-checkbox v-model="sameAsSender" label="同寄件人" color="teal" class="text-h6" />
-      </div>
-      <q-separator spaced />
-      <q-form ref="formRef" greedy>
+      </q-card>
+
+      <!-- 取件人資訊 -->
+      <q-card flat bordered class="q-pa-md q-mb-md">
+        <div class="flex items-center justify-between q-mb-sm">
+          <div class="text-h6 text-bold text-teal flex items-center">
+            <q-icon name="shopping_bag" size="md" class="q-mr-sm" /> 取件人資訊
+          </div>
+          <q-checkbox v-model="sameAsSender" label="同寄件人" color="teal" class="text-h6" />
+        </div>
+        <q-separator spaced />
+
         <!-- 選擇據點 -->
         <div v-if="method === '2'" class="row items-center q-my-md q-gutter-sm">
           <div class="text-h6 col-3 text-center">選擇據點：</div>
           <q-select
             v-model="selectedBranch"
-            :options="branches"
+            :options="location"
+            option-value="value"
+            option-label="value"
             outlined
             clearable
             emit-value
@@ -63,16 +79,17 @@
           <q-input
             class="col"
             outlined
-            v-model="fields[key]"
+            v-model="receiveFields[key]"
             :rules="[(val) => !!val || '請輸入資料']"
           />
         </div>
-      </q-form>
-    </q-card>
+      </q-card>
+    </q-form>
 
     <!-- 底部按鈕 -->
     <div class="flex justify-center q-gutter-lg q-mt-lg">
-      <q-btn outline color="grey-6" label="重置" size="lg" @click="resetForm" />
+      <q-btn outline color="grey-6" label="重新驗證" size="lg" @click="toPrevious" />
+      <q-btn outline color="grey-6" label="清空" size="lg" @click="resetForm" />
       <q-btn color="teal" label="下一步" size="lg" @click="comfirm" />
     </div>
   </q-card>
@@ -80,38 +97,45 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-// import { useRouter } from 'vue-router'
-// import { useQuasar } from 'quasar'
 import { useNotify } from 'src/utils/plugin'
 import { useUserInfoStore } from 'src/stores/userInfo'
 
 const userInfoStore = useUserInfoStore()
 
-const { branches } = userInfoStore
+const { location } = userInfoStore
 
 const $n = useNotify()
-// const $q = useQuasar()
 
 const formRef = ref(null)
-// const router = useRouter()
 const method = ref('1')
 const sameAsSender = ref(false)
 
+const field = ref({
+  name: '',
+  phone: '',
+})
+
 // 步驟資料
 const formData = defineModel('formData')
-const emit = defineEmits(['next-step'])
+const emit = defineEmits(['next-step', 'go-previous'])
+
+// 上一步
+const toPrevious = () => {
+  emit('go-previous')
+}
 
 // 下一步 ＋ 檢核
 const toNextStep = async () => {
+  console.log(selectedBranch.value)
   formData.value.item = method.value
   formData.value.location = selectedBranch.value
-  formData.value.receiveName = fields.value.name
-  formData.value.receivePhone = fields.value.phone
+  formData.value.receiveName = receiveFields.value.name
+  formData.value.receivePhone = receiveFields.value.phone
 
   emit('next-step')
 }
 
-const fields = ref({
+const receiveFields = ref({
   name: '',
   phone: '',
 })
@@ -124,8 +148,10 @@ const fieldLabels = {
 const selectedBranch = ref(null)
 
 watch(sameAsSender, (val) => {
-  fields.value.name = val ? formData.value.sendName : ''
-  fields.value.phone = val ? formData.value.sendPhone : ''
+  const name = formData.value.verifyName ? formData.value.verifyName : field.value.name
+  const phone = formData.value.verifyPhone ? formData.value.verifyPhone : field.value.phone
+  receiveFields.value.name = val ? name : ''
+  receiveFields.value.phone = val ? phone : ''
 })
 
 const resetForm = () => {
@@ -133,8 +159,8 @@ const resetForm = () => {
   selectedBranch.value = null
 
   // 清空欄位
-  Object.keys(fields.value).forEach((key) => {
-    fields.value[key] = ''
+  Object.keys(receiveFields.value).forEach((key) => {
+    receiveFields.value[key] = ''
   })
 }
 
@@ -144,7 +170,12 @@ const comfirm = async () => {
     $n.error('請照規則填寫所有必填欄位!')
     return
   }
-  console.log(fields.value, selectedBranch.value)
+  if (formData.value.verifyName == '') {
+    formData.value.verifyName = field.value.name
+  }
+  if (formData.value.verifyPhone == '') {
+    formData.value.verifyPhone = field.value.phone
+  }
   toNextStep()
 }
 </script>

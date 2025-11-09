@@ -42,12 +42,12 @@
       <q-step
         :name="2"
         prefix="2"
-        title="確認資料"
+        title="付款"
         icon="settings"
         :done="step > 2"
         :header-nav="step > 2"
       >
-        <StoreItemInfo
+        <ComfirmInfo
           ref="stepRef"
           v-model:formData="formData"
           @next-step="handleNextStep"
@@ -57,7 +57,7 @@
       <q-step
         :name="3"
         prefix="3"
-        title="付款"
+        title="領取物品"
         icon="settings"
         :done="step > 3"
         :header-nav="step > 3"
@@ -74,7 +74,7 @@
 import { useDialogPluginComponent, useQuasar } from 'quasar'
 import { ref, reactive } from 'vue'
 import ShowVPQrcode from './ShowVPQrcode.vue'
-import StoreItemInfo from './StoreItemInfo.vue'
+import ComfirmInfo from './ComfirmInfo.vue'
 import PaymentPage from './PaymentPage.vue'
 import { useRouter } from 'vue-router'
 import { useNotify } from 'src/utils/plugin'
@@ -87,9 +87,12 @@ defineEmits([...useDialogPluginComponent.emits])
 
 // 步驟表單資料
 const formData = reactive({
-  receiveName: '',
-  receivePhone: '',
-  locker: '',
+  type: '2',
+  location: '1',
+  payment: 30,
+  verifyName: '',
+  verifyPhone: '',
+  lockerNo: '',
 })
 
 // 步驟相關

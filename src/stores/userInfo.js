@@ -6,9 +6,8 @@ import { useNotify } from '../utils/plugin'
 const $n = useNotify()
 
 export const useUserInfoStore = defineStore('userInfo', () => {
-  const type = ref('')
   const lockers = ref([]) // 儲存櫃子列表
-  const location = ref([]) // 儲存櫃子列表
+  const location = ref([]) // 儲存地點列表
   const selectedLocker = ref(null) // 目前選中的櫃子
 
   const qrCodeDetail = ref(null)
@@ -18,14 +17,10 @@ export const useUserInfoStore = defineStore('userInfo', () => {
     selectedLocker.value = locker
   }
 
+  // 重選櫃子
   const clearSelection = () => {
     selectedLocker.value = null
   }
-
-  const branches = ref([
-    { label: '台北', value: 'taipei' },
-    { label: '高雄', value: 'kaohsiung' },
-  ])
 
   // 取得櫃子狀態
   const fetchLocker = async () => {
@@ -45,7 +40,7 @@ export const useUserInfoStore = defineStore('userInfo', () => {
       const res = await api.post('/common/group/info', {
         groupName: 'LOCATION',
       })
-      location.value = res.data.data
+      location.value = res.data.data.map((item) => ({ key: item.key, value: item.value }))
     } catch (err) {
       console.error(err)
     }
@@ -82,9 +77,29 @@ export const useUserInfoStore = defineStore('userInfo', () => {
     }
   }
 
+  // 送出寄貨資料
   const sendUserInfo = async (data) => {
     try {
       const response = await api.post(`/lockers/operation`, data)
+      const responseData = response.data
+      if (responseData.code !== '0000') {
+        $n.error(responseData.message)
+        return null
+      } else {
+        return responseData
+      }
+    } catch (error) {
+      console.log(error)
+      const errorMessage = error.response?.data?.message || '發生未知錯誤'
+      $n.error(errorMessage)
+      return null
+    }
+  }
+
+  // 送出取貨資料
+  const pickdUserInfo = async (data) => {
+    try {
+      const response = await api.post(`/lockers/pickup`, data)
       const responseData = response.data
       if (responseData.code !== '0000') {
         $n.error(responseData.message)
@@ -105,14 +120,14 @@ export const useUserInfoStore = defineStore('userInfo', () => {
     selectedLocker,
     selectLocker,
     clearSelection,
-    branches,
-    type,
     fetchLocker,
     fetchLocation,
+    location,
     getQrcode,
     qrCodeDetail,
     qrcodeLoading,
     getQrcodeValidate,
     sendUserInfo,
+    pickdUserInfo,
   }
 })

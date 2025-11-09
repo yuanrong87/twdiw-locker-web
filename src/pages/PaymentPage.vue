@@ -1,19 +1,17 @@
 <template>
-  <!-- 主卡片 -->
-  <q-card class="q-pa-lg" style="width: 100%">
+  <!-- 寄物模式 -->
+  <q-card v-if="formData.type == '1'" class="q-pa-lg" style="width: 100%">
     <div class="text-h4 text-teal text-bold text-center q-mb-lg">付款</div>
 
     <q-card flat bordered class="q-pa-md q-mb-xl">
       <!-- 金額提示 -->
-      <div class="text-subtitle1 q-mb-xl">
-        寄件費用：
-        <span class="text-h4 text-red">NT$ 30</span>
+      <div class="row items-center q-mt-md q-mb-xl">
+        <div class="text-h6 q-mr-sm">寄件費用：</div>
+        <span class="text-h4 text-red">NT$ {{ formData.payment }}</span>
       </div>
-
       <!-- 付款按鈕 -->
       <q-btn color="teal" label="確認付款" size="lg" @click="payFee" class="full-width" />
 
-      <!-- 選擇其他付款方式 (可選) -->
       <div class="text-caption q-mt-md text-grey">支援信用卡 / 行動支付 / 超商付款</div>
     </q-card>
 
@@ -22,10 +20,32 @@
       <q-btn outline color="grey-6" label="取消" size="lg" @click="cancel" />
     </div>
   </q-card>
+
+  <!-- 取物模式 -->
+  <q-card v-else class="q-pa-lg" style="width: 100%">
+    <div class="text-h4 text-teal text-bold text-center q-mb-lg">領取物品</div>
+
+    <q-card flat bordered class="q-pa-md">
+      <!-- 櫃子提示 -->
+      <div class="row justify-center items-center q-mt-md q-mb-xl">
+        <div class="text-h6 q-mr-sm">櫃子號碼：</div>
+        <span class="text-h4 text-red">{{ formData.lockerNo ? formData.lockerNo : '001' }}</span>
+      </div>
+      <div class="text-h5 text-center q-mb-lg">
+        請至指定櫃號取出物品，並於完成後關閉櫃門，謝謝。
+      </div>
+
+      <!-- 付款按鈕 -->
+      <div class="flex justify-center q-gutter-lg">
+        <q-btn color="teal" label="回首頁" size="lg" @click="goToHome" />
+      </div>
+    </q-card>
+  </q-card>
 </template>
 
 <script setup>
 // import { ref } from 'vue'
+// import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useNotify } from 'src/utils/plugin'
@@ -44,7 +64,16 @@ const payFee = async () => {
   formData.value.payment = 30
   if (!formData.value.location) formData.value.location = '1'
 
-  const data = { ...formData.value }
+  const data = {
+    item: formData.value.item,
+    location: formData.value.location,
+    lockerNo: formData.value.lockerNo,
+    sendName: formData.value.verifyName,
+    sendPhone: formData.value.verifyPhone,
+    payment: formData.value.payment,
+    receiveName: formData.value.receiveName,
+    receivePhone: formData.value.receivePhone,
+  }
   const result = await userInfoStore.sendUserInfo(data)
   if (result) {
     $q.dialog({
@@ -67,5 +96,10 @@ const cancel = () => {
     router.push('/')
     $n.success('已返回首頁')
   })
+}
+
+const goToHome = () => {
+  router.push('/')
+  $n.success('已返回首頁')
 }
 </script>

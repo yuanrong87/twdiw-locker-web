@@ -62,7 +62,12 @@
         :done="step > 3"
         :header-nav="step > 3"
       >
-        <StoreItemInfo ref="stepRef" v-model:formData="formData" @next-step="handleNextStep" />
+        <StoreItemInfo
+          ref="stepRef"
+          v-model:formData="formData"
+          @next-step="handleNextStep"
+          @go-previous="goPrevious"
+        />
       </q-step>
       <q-step
         :name="4"
@@ -84,8 +89,6 @@
       </q-step>
     </q-stepper>
   </div>
-
-  <!-- </q-card> -->
 </template>
 
 <script setup>
@@ -107,14 +110,15 @@ defineEmits([...useDialogPluginComponent.emits])
 
 // 步驟表單資料
 const formData = reactive({
+  type: '1',
   item: '',
   lockerNo: '',
-  sendName: '',
-  sendPhone: '',
+  verifyName: '',
+  verifyPhone: '',
   location: '',
   receiveName: '',
   receivePhone: '',
-  payment: 0,
+  payment: 30,
 })
 
 // 步驟相關

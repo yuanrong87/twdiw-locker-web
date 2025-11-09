@@ -15,17 +15,18 @@
 
   <div class="flex row justify-center">
     <q-btn
-      class="col-auto q-px-xl q-py-md q-mr-xl"
+      outline
+      class="col-auto q-mr-xl"
       color="grey"
       label="重選"
-      size="24px"
+      size="lg"
       @click="clearSelection"
     ></q-btn>
     <q-btn
-      class="col-auto q-px-xl q-py-md"
+      class="col-auto q-py-md"
       color="teal"
       label="下一步"
-      size="24px"
+      size="lg"
       @click="toNextStep"
     ></q-btn>
   </div>
@@ -41,7 +42,7 @@ import { useUserInfoStore } from 'src/stores/userInfo'
 const userInfoStore = useUserInfoStore()
 
 const { lockers, selectedLocker } = storeToRefs(userInfoStore)
-const { selectLocker, clearSelection, fetchLocker } = userInfoStore
+const { selectLocker, clearSelection, fetchLocker, fetchLocation } = userInfoStore
 
 const $n = useNotify()
 
@@ -60,9 +61,10 @@ const toNextStep = async () => {
   emit('next-step')
 }
 
-onMounted(() => {
+onMounted(async () => {
   selectedLocker.value = null
   fetchLocker()
+  fetchLocation()
 })
 
 defineExpose({ toNextStep })
