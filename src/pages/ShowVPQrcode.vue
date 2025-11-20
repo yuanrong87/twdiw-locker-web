@@ -24,7 +24,10 @@
         fit="contain"
       ></q-img>
     </div>
-    <p class="text-h5 text-center">
+    <p
+      v-if="qrCodeDetail && qrCodeDetail.qrcodeImage && !qrcodeLoading"
+      class="text-h5 text-center"
+    >
       驗證倒數：<span class="text-grey-7">
         {{ `0${Math.floor(countdown / 60)}` }}:{{ String(countdown % 60).padStart(2, '0') }}
       </span>
@@ -50,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUserInfoStore } from 'src/stores/userInfo'
 import { useNotify } from '../utils/plugin'
@@ -192,6 +195,11 @@ const toNextStep = async () => {
 onMounted(async () => {
   await getQrcode()
   startPolling()
+})
+
+onUnmounted(() => {
+  stopPolling()
+  stopCountdown()
 })
 </script>
 
