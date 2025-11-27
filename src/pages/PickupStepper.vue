@@ -66,8 +66,6 @@
       </q-step>
     </q-stepper>
   </div>
-
-  <!-- </q-card> -->
 </template>
 
 <script setup>

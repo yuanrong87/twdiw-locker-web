@@ -33,6 +33,8 @@
       </span>
     </p>
   </div>
+
+  <!-- 底部按鈕 -->
   <div class="flex row justify-center">
     <q-btn
       outline
@@ -204,12 +206,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.card {
-  width: 60%;
-  min-height: 400px;
-  background-color: white;
-  border-radius: 16px;
-}
 .card-title {
   width: auto;
   font-size: 32px;

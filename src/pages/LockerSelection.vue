@@ -1,5 +1,7 @@
 <template>
   <div class="card-title text-teal">請選擇櫃子</div>
+
+  <!-- 櫃子按鈕區 -->
   <div class="locker-buttons col row justify-center items-center q-gutter-lg">
     <q-btn
       v-for="locker in lockers"
@@ -13,6 +15,7 @@
     />
   </div>
 
+  <!-- 底部按鈕 -->
   <div class="flex row justify-center">
     <q-btn
       outline

@@ -1,14 +1,18 @@
 <template>
   <q-page class="flex column items-center">
+    <!-- 主標題 -->
     <h3
       class="q-mt-lg q-mb-none text-bold text-grey-8"
       style="text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3)"
     >
       歡迎使用 行動憑證置物櫃
     </h3>
+    <!-- 副標題 -->
     <span class="text-h5 text-bold q-mt-md text-italic">透過數位憑證快速、安全地保管您的物品</span>
 
+    <!-- 主要內容容器 -->
     <div class="content">
+      <!-- 兩個主要操作按鈕：「寄物」、「取物」 -->
       <div class="col row justify-around q-my-md">
         <q-btn
           stack
@@ -26,6 +30,8 @@
           <div class="action-title-text q-mt-xl">取物</div>
         </q-btn>
       </div>
+
+      <!-- 使用說明卡片區塊 -->
       <div class="card-content q-my-md q-py-md">
         <ul>
           <li>

@@ -12,8 +12,8 @@
   </div>
   <div
     :style="{
-      maxWidth: '1300px',
-      width: '1000px',
+      width: '100%',
+      maxWidth: '1000px',
       height: '85vh',
       minHeight: '85vh',
       margin: '0 auto',

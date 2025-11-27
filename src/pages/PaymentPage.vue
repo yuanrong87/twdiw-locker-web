@@ -44,8 +44,6 @@
 </template>
 
 <script setup>
-// import { ref } from 'vue'
-// import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useNotify } from 'src/utils/plugin'
